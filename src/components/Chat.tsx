@@ -25,8 +25,8 @@ const Chat = () => {
                 width: '30%',
                 margin: '10px 0',
                 border: '1px solid black',
-                background: m.sender === '79256882391@c.us' ? 'lime' : 'white',
-                textAlign: m.sender === '79256882391@c.us' ? 'right' : 'left',
+                background: chatId === m.sender ? 'white' : 'lime',
+                textAlign: chatId === m.sender ? 'left' : 'right',
               }}
             >
               {m.message}

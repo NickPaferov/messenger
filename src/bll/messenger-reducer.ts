@@ -110,6 +110,7 @@ export const receiveMessageTC = (): AppThunkType => async (dispatch, getState) =
   } catch (e) {
     console.log(e);
   }
+  dispatch(receiveMessageTC());
 };
 
 export type MessengerActionsType =
