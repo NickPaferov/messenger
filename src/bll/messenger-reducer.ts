@@ -76,33 +76,14 @@ export const receiveMessageTC = (): AppThunkType => async (dispatch, getState) =
     let res = await chatAPI.receiveNotification(idInstance, apiTokenInstance);
     console.log(res.data);
     if (!res.data) return;
-    if (res.data.body.typeWebhook === 'incomingMessageReceived') {
+    if (res.data.body.messageData) {
       dispatch(
         setMessageAC(
           res.data.body.senderData.chatId,
           res.data.body.idMessage,
           res.data.body.senderData.sender,
-          res.data.body.messageData.textMessageData.textMessage
-        )
-      );
-    }
-    if (res.data.body.typeWebhook === 'outgoingMessageReceived') {
-      dispatch(
-        setMessageAC(
-          res.data.body.senderData.chatId,
-          res.data.body.idMessage,
-          res.data.body.senderData.sender,
-          res.data.body.messageData.textMessageData.textMessage
-        )
-      );
-    }
-    if (res.data.body.typeWebhook === 'outgoingAPIMessageReceived') {
-      dispatch(
-        setMessageAC(
-          res.data.body.senderData.chatId,
-          res.data.body.idMessage,
-          res.data.body.senderData.sender,
-          res.data.body.messageData.extendedTextMessageData.text
+          res.data.body.messageData.textMessageData?.textMessage ||
+            res.data.body.messageData.extendedTextMessageData?.text
         )
       );
     }
@@ -110,7 +91,6 @@ export const receiveMessageTC = (): AppThunkType => async (dispatch, getState) =
   } catch (e) {
     console.log(e);
   }
-  dispatch(receiveMessageTC());
 };
 
 export type MessengerActionsType =
